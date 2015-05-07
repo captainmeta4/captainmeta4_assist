@@ -3,8 +3,6 @@ import requests
 import os
 import math
 from collections import deque
-import datetime
-import re
 
 #Initialize reddit
 r=praw.Reddit(user_agent="Content age enforcement bot by /u/captainmeta4")
