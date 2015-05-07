@@ -3,6 +3,8 @@ import requests
 import os
 import math
 from collections import deque
+import time
+import re
 
 #Initialize reddit
 r=praw.Reddit(user_agent="Content age enforcement bot by /u/captainmeta4")
@@ -10,13 +12,12 @@ username = "Content_Age_Bot"
 master_subreddit = "captainmeta4bots"
 
 #Embed.ly stuff
-embedly_key= os.environ.get('key')
+embedly_key=os.environ.get('key')
 
 class Bot():
 
     def initialize(self):
         r.login(username,os.environ.get('password'))
-
         self.already_done=deque([],maxlen=200)
 
         self.options=eval(r.get_wiki_page(master_subreddit,"content_age").content_md)
@@ -54,6 +55,7 @@ class Bot():
 
             #Now do subreddit configs
             try:
+            
                 subredditname=message.subject
 
                 if message.author not in r.get_moderators(subredditname):
@@ -62,7 +64,7 @@ class Bot():
 
                 #check message body for junk
                 if re.search("^\\d{1,3}$",message.body) == None:
-                    message.reply("There was a problem, and I wasn't able to make sense of your message.")
+                    message.reply("1There was a problem, and I wasn't able to make sense of your message. (Error code: 1)")
 
                 threshold=eval(message.body)
 
@@ -70,9 +72,9 @@ class Bot():
 
                 r.edit_wiki_page(master_subreddit,"content_age",str(self.options))
 
-                r.send_message(subredditname,"Threshold Update","The age threshold for /r/"+subredditname+" has been set to "+str(threshold)+" days by /u/"+message.author.name)
+                r.send_message(r.get_subreddit(subredditname),"Threshold Update","The age threshold for /r/"+subredditname+" has been set to "+str(threshold)+" days by /u/"+message.author.name)
             except:
-                message.reply("There was a problem, and I wasn't able to make sense of your message.")
+                message.reply("There was a problem, and I wasn't able to make sense of your message. (Error code: 2)")
                 
 
     def process_submissions(self):
@@ -153,6 +155,11 @@ class Bot():
         while 1:
             self.check_messages()
             self.process_submissions()
+
+            time.sleep(1)
+            while time.localtime().tm_sec !=0 and time.localtime().tm_sec!=30:
+                time.sleep(1)
+            
 
 if __name__=='__main__':
     modbot=Bot()
