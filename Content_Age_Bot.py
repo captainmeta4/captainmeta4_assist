@@ -112,7 +112,7 @@ class Bot():
             content_creation = content_creation / 1000
             
             #sanity check for if embedly fucks up
-            if content_creation < 0
+            if content_creation < 0:
                 continue
 
             #Get the reddit submission timestamp
