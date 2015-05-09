@@ -44,7 +44,7 @@ class Bot():
 
                 r.send_message(message.subreddit, "Introduction",msg)
 
-                self.options[subredditname.lower()]= 365
+                self.options[subreddit.display_name.lower()]= 365
 
                 r.edit_wiki_page(master_subreddit,"content_age",str(self.options))
 
@@ -72,7 +72,11 @@ class Bot():
 
                 r.edit_wiki_page(master_subreddit,"content_age",str(self.options))
 
-                r.send_message(r.get_subreddit(subredditname),"Threshold Update","The age threshold for /r/"+subredditname+" has been set to "+str(threshold)+" days by /u/"+message.author.name)
+                msg=("Threshold Update","The age threshold for /r/"+subredditname+" has been set to "+str(threshold)+" days by /u/"+message.author.name)
+
+                r.send_message(r.get_subreddit(subredditname),"Threshold Update",msg)
+                print(msg)
+                
             except:
                 message.reply("There was a problem, and I wasn't able to make sense of your message. (Error code: 2)")
                 
@@ -104,7 +108,10 @@ class Bot():
             data=requests.get('http://api.embed.ly/1/extract',params=params)
 
             #Get content timestamp
-            content_creation = data.json()['published']
+            try:
+                content_creation = data.json()['published']
+            except:
+                continue
 
             #Pass on content that does not have a timestamp
             if content_creation == None:
