@@ -30,6 +30,11 @@ class Bot():
 
             message.mark_as_read()
             
+            #Ignore post/comment replies
+            if (message.subject=="post reply"
+                or message.subject=="comment reply"):
+                continue
+            
             #Assume it's a mod invite
             try:
                 message.subreddit.accept_moderator_invite()
