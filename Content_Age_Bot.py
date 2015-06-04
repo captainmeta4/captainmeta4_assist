@@ -154,7 +154,7 @@ class Bot():
             #Leave a distinguished message
             msg=("Thanks for contributing. However, your submission has been automatically removed."+
                  "\n\nAs per the [subreddit rules](/r/"+submission.subreddit.display_name+"/about/sidebar),"+
-                 "content older than "+self.options[submission.subreddit.display_name.lower()]+" days is not allowed.\n\n---\n\n"+
+                 "content older than "+str(self.options[submission.subreddit.display_name.lower()])+" days is not allowed.\n\n---\n\n"+
                  "*I am a bot. Please [Message the Mods](https://www.reddit.com/message/compose?to=/r/"+submission.subreddit.display_name+
                  "&subject=Question regarding the removal of this submission by /u/"+submission.author.name+
                  "&message=I have a question regarding the removal of this [submission]("+submission.permalink+"\) if you feel this was in error.*")
