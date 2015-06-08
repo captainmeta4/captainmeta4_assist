@@ -1,1 +1,1 @@
-bot: python Content_Age_Bot.py
+politics: python politics_content_age.py
