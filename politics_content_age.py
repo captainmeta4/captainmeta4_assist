@@ -21,7 +21,8 @@ class Bot():
         self.already_done=deque([],maxlen=200)
 
         self.options=eval(r.get_wiki_page(master_subreddit,"content_age").content_md)
-
+    
+    #Doesn't actually run under this version of the bot
     def check_messages(self):
 
         print('checking messages')
