@@ -152,7 +152,7 @@ class Bot():
                 #Leave a distinguished message
                 msg=("Hi "+submission.author.name+". Thank you for participating in /r/Politics. However, [your submission]("+submission.permalink+") has been removed for the following reason(s):"+
                      "* [Out of Date](http://www.reddit.com/r/politics/wiki/rulesandregs#wiki_the_.2Fr.2Fpolitics_on_topic_statement): /r/politics is for **current** US political news and information that has been published within the last 45 days."+
-                     "If you have any questions about this removal, please feel free to [message the moderators.](https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/"+submission.author.name+"&message=I have a question regarding the removal of this [submission.]({"+submission.permalink+"}\))"
+                     "If you have any questions about this removal, please feel free to [message the moderators.](https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/"+submission.author.name+"&message=I have a question regarding the removal of this [submission.]({"+submission.permalink+"}\))")
                 
                 submission.add_comment(msg).distinguish()
                 submission.set_flair(flair_text="Out of Date")
