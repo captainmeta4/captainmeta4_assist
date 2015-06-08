@@ -89,7 +89,7 @@ class Bot():
     def process_submissions(self):
         print ("processing submissions")
 
-        for submission in r.get_subreddit("mod").get_new(limit=100):
+        for submission in r.get_subreddit("politics").get_new(limit=200):
 
             #Avoid duplicate work
             if submission.id in self.already_done:
@@ -150,13 +150,12 @@ class Bot():
                 submission.remove()
             
                 #Leave a distinguished message
-                msg=("Thanks for contributing. However, your submission has been automatically removed."+
-                     "\n\nAs per the [subreddit rules](/r/"+submission.subreddit.display_name+"/about/sidebar),"+
-                     "content older than "+str(self.options[submission.subreddit.display_name.lower()])+" days is not allowed.\n\n---\n\n"+
-                     "*I am a bot. Please [Message the Mods](https://www.reddit.com/message/compose?to=/r/"+submission.subreddit.display_name+
-                     "&subject=Question regarding the removal of this submission by /u/"+submission.author.name+
-                     "&message=I have a question regarding the removal of this [submission]("+submission.permalink+") if you feel this was in error.*")
+                msg=("Hi "+submission.author.name+". Thank you for participating in /r/Politics. However, [your submission]("+submission.permalink+") has been removed for the following reason(s):"+
+                     "* [Out of Date](http://www.reddit.com/r/politics/wiki/rulesandregs#wiki_the_.2Fr.2Fpolitics_on_topic_statement): /r/politics is for **current** US political news and information that has been published within the last 45 days."+
+                     "If you have any questions about this removal, please feel free to [message the moderators.](https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/"+submission.author.name+"&message=I have a question regarding the removal of this [submission.]({"+submission.permalink+"}\))
+                
                 submission.add_comment(msg).distinguish()
+                submission.set_flair(flair_text="Out of Date")
             except:
                 pass
 
@@ -164,12 +163,9 @@ class Bot():
         self.initialize()
 
         while 1:
-            self.check_messages()
+            #self.check_messages()
             self.process_submissions()
 
-            time.sleep(1)
-            while time.localtime().tm_sec !=0 and time.localtime().tm_sec!=30:
-                time.sleep(1)
             
 
 if __name__=='__main__':
