@@ -89,7 +89,7 @@ class Bot():
     def process_submissions(self):
         print ("processing submissions")
 
-        for submission in r.get_subreddit("politics").get_new(limit=200):
+        for submission in praw.helpers.submission_stream(r,'politics',limit=200,verbosity=0):
 
             #Avoid duplicate work
             if submission.id in self.already_done:
@@ -161,10 +161,7 @@ class Bot():
 
     def run(self):
         self.initialize()
-
-        while 1:
-            #self.check_messages()
-            self.process_submissions()
+        self.process_submissions()
 
             
 
