@@ -30,10 +30,9 @@ class Bot():
     
         print ("processing /r/politics submissions")
         
-        #Trick to avoid eating the embedly API limit
-        limit=1
-        for submission in r.get_subreddit('politics').get_new(limit=limit):
-        limit=100
+
+        for submission in r.get_subreddit('politics').get_new(limit=self.limit):
+            
             #Avoid duplicate work
             if (submission.id in self.already_done
                 or submission.fullname in self.already_done):
@@ -129,9 +128,11 @@ class Bot():
 
     def run(self):
         self.initialize()
+        self.limit=1
         while True:
             self.process_politics_submissions()
             self.process_my_comments()
+            self.limit=100
 
             
 
