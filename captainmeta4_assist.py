@@ -37,9 +37,11 @@ class Bot():
     #Enforces content age rule in /r/politics
     
         print ("processing /r/politics submissions")
-
-        for submission in r.get_subreddit('politics').get_new(limit=100):
-
+        
+        #Trick to avoid eating the embedly API limit
+        limit=1
+        for submission in r.get_subreddit('politics').get_new(limit=limit):
+        limit=100
             #Avoid duplicate work
             if (submission.id in self.already_done
                 or submission.fullname in self.already_done):
