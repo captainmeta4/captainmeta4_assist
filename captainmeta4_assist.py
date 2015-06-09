@@ -18,7 +18,7 @@ embedly_key=os.environ.get('key')
 
 #graceful exit
 def sigterm_handler(signal, frame):
-    r.edit_wiki_page(master_subreddit,"assist",str(self.already_done))
+    r.edit_wiki_page(master_subreddit,"assist",str(modbot.already_done))
 signal.signal(signal.SIGTERM, sigterm_handler)
 
 class Bot():
