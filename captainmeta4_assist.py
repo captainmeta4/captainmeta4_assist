@@ -16,21 +16,13 @@ master_subreddit = "captainmeta4bots"
 #Embed.ly stuff
 embedly_key=os.environ.get('key')
 
-#graceful exit
-def sigterm_handler(signal, frame):
-    r.edit_wiki_page(master_subreddit,"assist",str(modbot.already_done))
-signal.signal(signal.SIGTERM, sigterm_handler)
-
 class Bot():
 
     def initialize(self):
         r.login(username,os.environ.get('password'))
         
         self.already_done=eval(r.get_wiki_page(master_subreddit,"assist").content_md)
-        self.options=eval(r.get_wiki_page(master_subreddit,"content_age").content_md)
-    
-
-    
+        self.options=deque([],maxlen=200)
     
     
     def process_politics_submissions(self):
