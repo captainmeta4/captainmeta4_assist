@@ -5,6 +5,8 @@ import math
 from collections import deque
 import time
 import re
+import signal
+import sys
 
 #Initialize reddit
 r=praw.Reddit(user_agent="Content age enforcement bot by /u/captainmeta4")
@@ -14,24 +16,36 @@ master_subreddit = "captainmeta4bots"
 #Embed.ly stuff
 embedly_key=os.environ.get('key')
 
+#graceful exit
+def sigterm_handler(signal, frame):
+    r.edit_wiki_page(master_subreddit,"assist",str(self.already_done))
+signal.signal(signal.SIGTERM, sigterm_handler)
+
 class Bot():
 
     def initialize(self):
         r.login(username,os.environ.get('password'))
-        self.already_done=deque([],maxlen=200)
-
+        
+        self.already_done=eval(r.get_wiki_page(master_subreddit,"assist").content_md)
         self.options=eval(r.get_wiki_page(master_subreddit,"content_age").content_md)
     
-    def process_submissions(self):
-        print ("processing submissions")
 
-        for submission in praw.helpers.submission_stream(r,'politics',limit=200,verbosity=0):
+    
+    
+    
+    def process_politics_submissions(self):
+    #Enforces content age rule in /r/politics
+    
+        print ("processing /r/politics submissions")
+
+        for submission in r.get_subreddit('politics').get_new(limit=100):
 
             #Avoid duplicate work
-            if submission.id in self.already_done:
+            if (submission.id in self.already_done
+                or submission.fullname in self.already_done):
                 continue
 
-            self.already_done.append(submission.id)
+            self.already_done.append(submission.fullname)
 
             print("checking "+submission.title)
 
@@ -94,10 +108,36 @@ class Bot():
                 submission.set_flair(flair_text="Out of Date")
             except:
                 pass
+    
+    def process_my_comments(self):
+    #personal commands
+        
+        for comment in r.get_redditor(username).get_comments(sort='new',limit=100):
+            
+            #Avoid duplicate work
+            if comment.fullname in self.already_done:
+                continue
+            
+            self.already_done.append(comment.fullname)
+            
+            #global ban
+            if comment.body=='!global':
+                
+                #get parent object author
+                parent_author = r.get_info(thing_id=comment.parent_id).author
+                
+                for subreddit in r.get_my_moderation(limit=none):
+                    try:
+                        subreddit.add_ban(parent_author)
+                    except:
+                        pass
+            
 
     def run(self):
         self.initialize()
-        self.process_submissions()
+        while True:
+            self.process_politics_submissions()
+            self.process_my_comments()
 
             
 
