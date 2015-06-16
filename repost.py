@@ -26,6 +26,10 @@ class bot():
         #Collect unending submission stream
         for submission in praw.helpers.submission_stream(r, subredditname, limit=100, verbosity=0):
             print('checking '+submission.title)
+            
+            #ignore self-posts
+            if submission.is_self:
+                continue
 
             #break down url
             ParsedURL = urlparse.urlparse(submission.url)
