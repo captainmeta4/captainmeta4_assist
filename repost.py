@@ -27,10 +27,10 @@ class bot():
         for submission in praw.helpers.submission_stream(r, subredditname, limit=100, verbosity=0):
             print('checking '+submission.title)
 
-            #strip fragements away from url
+            #break down url
             ParsedURL = urlparse.urlparse(submission.url)
 
-            #strip params unless it's a site known to need them
+            #strip params and query unless it's a site known to need them
             if submission.domain in requires_params:
                 params=ParsedURL[3]
                 query=ParsedURL[4]
@@ -39,7 +39,7 @@ class bot():
                 query=''
             
                 
-            #Assemble url to search for
+            #strip fragments and assemble url to search for,
             NewParsedURL=urlparse.ParseResult(
                 scheme=ParsedURL[0],
                 netloc=ParsedURL[1],
