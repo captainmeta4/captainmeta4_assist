@@ -1,1 +1,1 @@
-politics: python captainmeta4_assist.py
+politics: python repost.py
