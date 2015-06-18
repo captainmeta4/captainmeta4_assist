@@ -11,6 +11,8 @@ username='captainmeta4'
 subredditname='politics'
 
 requires_params=[
+    'house.gov',
+    'senate.gov',
     'youtu.be',
     'youtube.com'
     ]
