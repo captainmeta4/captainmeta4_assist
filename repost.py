@@ -8,7 +8,7 @@ r=praw.Reddit(user_agent='/r/politics repost detector')
 #Set globals
 username='captainmeta4'
 
-subredditname='politics'
+subredditname='mod'
 
 requires_params=[
     'house.gov',
@@ -62,7 +62,7 @@ class bot():
             search = "url:"+url
 
             #Search subreddit for other posts that match            
-            for searchresult in r.search(search,subreddit=subredditname, sort='New'):
+            for searchresult in r.search(search,subreddit=submission.subreddit, sort='New'):
 
                 #Ignore the original post
                 if searchresult.id == submission.id:
@@ -74,7 +74,7 @@ class bot():
 
                 #Flag as possible repost and break out of search results
                 print('repost detected')
-                submission.report(reason='Bot in testing - possible repost - http://redd.it/'+searchresult.id)
+                submission.report(reason='Bot - possible repost - http://redd.it/'+searchresult.id)
                 break
 
     def run(self):
