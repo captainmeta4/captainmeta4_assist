@@ -18,6 +18,10 @@ requires_params=[
     'youtube.com'
     ]
 
+ignore_subreddits=[
+    'xkcd'
+    ]
+
 
 class bot():
 
@@ -32,6 +36,10 @@ class bot():
             
             #ignore self-posts
             if submission.is_self:
+                continue
+            
+            #ignore certain subreddits
+            if submission.subreddit.display_name in ignore_subreddits:
                 continue
 
             #break down url
