@@ -52,19 +52,26 @@ class bot():
             else:
                 params=''
                 query=''
-            
+                
+            #strip mobile. or m. subdomain away from netloc
+            netloc=ParsedURL[1]
+            netloc=netloc.replace('m.','',1)
+            netloc=netloc.replace('mobile.','',1)
                 
             #strip fragments and assemble url to search for,
             NewParsedURL=urlparse.ParseResult(
                 scheme=ParsedURL[0],
-                netloc=ParsedURL[1],
+                netloc=netloc,
                 path=ParsedURL[2],
                 params=params,
                 query=query,
                 fragment=''
                 )
             url=urlparse.urlunparse(NewParsedURL)
-
+            
+            #strip away schema
+            url=url.replace('http://','',1)
+            url=url.replace('https://','',1)
             #print(url)
             
             #create search string
