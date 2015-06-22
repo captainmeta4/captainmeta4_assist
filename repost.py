@@ -13,6 +13,7 @@ subredditname='mod'
 requires_params=[
     'house.gov',
     'senate.gov',
+    'quinnipiac.edu',
     'youtu.be',
     'youtube.com'
     ]
