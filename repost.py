@@ -11,6 +11,7 @@ username='captainmeta4'
 subredditname='mod'
 
 requires_params=[
+    'c-span.org',
     'house.gov',
     'senate.gov',
     'quinnipiac.edu',
