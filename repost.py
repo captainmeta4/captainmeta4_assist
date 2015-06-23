@@ -47,7 +47,7 @@ class bot():
             ParsedURL = urlparse.urlparse(submission.url)
 
             #strip params and query unless it's a site known to need them
-            if submission.domain in requires_params:
+            if any(entry in submission.domain for entry in requires_params):
                 params=ParsedURL[3]
                 query=ParsedURL[4]
             else:
