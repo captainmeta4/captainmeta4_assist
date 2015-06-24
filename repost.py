@@ -3,7 +3,7 @@ import urllib.parse as urlparse
 import os
 
 #Initiate reddit
-r=praw.Reddit(user_agent='/r/politics repost detector')
+r=praw.Reddit(user_agent='reddit repost detector running under /u/captainmeta4')
 
 #Set globals
 username='captainmeta4'
