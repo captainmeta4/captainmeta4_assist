@@ -13,6 +13,7 @@ subredditname='mod'
 requires_params=[
     'c-span.org',
     'house.gov',
+    'news-republic.com',
     'senate.gov',
     'quinnipiac.edu',
     'youtu.be',
