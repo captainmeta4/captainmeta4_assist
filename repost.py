@@ -100,13 +100,7 @@ class bot():
 
                 #Flag as possible repost and break out of search results
                 print('repost detected')
-                
-                if any(entry in submission.domain for entry in zero_false_positives):
-                    submission.remove()
-                    submission.set_flair(flair_text="Already Submitted")
-                    submission.add_comment("Your submission has been removed - that link has already been submitted: http://redd.it/"+searchresult.id)
-                else:
-                    submission.report(reason='Bot - possible repost - http://redd.it/'+searchresult.id)
+                submission.report(reason='Bot - possible repost - http://redd.it/'+searchresult.id)
                 break
 
     def run(self):
