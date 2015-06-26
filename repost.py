@@ -24,14 +24,15 @@ ignore_subreddits=[
     'xkcd'
     ]
 
-zero_false_positive=[
-    'bostonglobe.com',
-    'cnn.com',
-    'latimes.com',
-    'nytimes.com'
-    'washingtonpost.com',
-    'vox.com'
-    ]
+#Feature not yet deployed
+#zero_false_positive=[
+#    'bostonglobe.com',
+#    'cnn.com',
+#    'latimes.com',
+#    'nytimes.com'
+#    'washingtonpost.com',
+#    'vox.com'
+#    ]
 
 class bot():
 
