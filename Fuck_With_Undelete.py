@@ -1,6 +1,8 @@
+#This is a script that can be run in order to generate false submissions on /r/undelete
+#This script exists for the sole purpose of assholery.
+
 import praw
 import time
-from collections import deque
 
 r.login(input("Username: "), input("Password: "))
 
