@@ -115,8 +115,8 @@ class Bot():
                 break
             
             else:
-                #If there isn't an existing submission, make one
-                s.submit(archive_subreddit, modmail.subject, text=archive_text)
+                #If there isn't an existing submission, make one and self-approve it
+                s.submit(archive_subreddit, modmail.subject, text=archive_text).approve()
                 print('new submission created')
                 
 
