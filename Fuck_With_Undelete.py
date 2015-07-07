@@ -5,6 +5,7 @@
 import praw
 import time
 
+r=praw.Reddit("Undelete Garbage Generator v1 by /u/captainmeta4")
 r.login(input("Username: "), input("Password: "))
 
 #Get a list of subs that the user moderates
