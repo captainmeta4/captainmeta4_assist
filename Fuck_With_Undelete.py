@@ -20,7 +20,7 @@ for submission in r.get_subreddit('all').get_hot(limit=1000):
 print("Found "+str(len(posts))+" usable submissions")
 print("Removing posts...")
 
-Remove all the posts
+#Remove all the posts
 for submission in r.get_info(thing_id=posts):
     submission.remove()
 
@@ -29,6 +29,7 @@ print("Waiting 30 seconds")
 
 time.sleep(30)
 
+#And put all the posts back up
 print("Restoring posts...")
 for submission in r.get_info(thing_id=posts):
     submission.remove()
