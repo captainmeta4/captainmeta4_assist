@@ -33,6 +33,6 @@ time.sleep(30)
 #And put all the posts back up
 print("Restoring posts...")
 for submission in r.get_info(thing_id=posts):
-    submission.remove()
+    submission.approve()
 
 print("posts restored")
