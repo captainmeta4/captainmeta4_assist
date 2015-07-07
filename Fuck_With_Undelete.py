@@ -1,5 +1,6 @@
 #This is a script that can be run in order to generate false submissions on /r/undelete
 #This script exists for the sole purpose of assholery.
+#Requires that you have posts permissions in all subreddits that you moderate
 
 import praw
 import time
