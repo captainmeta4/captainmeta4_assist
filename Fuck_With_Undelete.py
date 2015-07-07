@@ -15,7 +15,7 @@ for subreddit in r.get_my_moderation(limit=1000):
     
 #Load the top 1000 submissions from /r/all/hot and make a listing of submissions that I can remove
 posts = []
-for submission in r.get_subreddit('all').get_hot(limit=1000):
+for submission in r.get_subreddit('all').get_hot(limit=100):
     if submission.subreddit.display_name in my_moderation:
         posts.append(submission.fullname)
         
