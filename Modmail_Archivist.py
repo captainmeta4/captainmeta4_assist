@@ -76,6 +76,9 @@ class Bot():
         #Message contents
         archive_string = archive_string + message.body
         
+        #Replace --- line seperators with ##--- due to subreddit css
+        archive_string = re.sub("\n---+\n","\n##---\n",archive_string)
+        
         return archive_string
         
 
