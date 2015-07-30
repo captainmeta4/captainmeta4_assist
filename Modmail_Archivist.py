@@ -23,10 +23,10 @@ s=praw.Reddit(user_agent) #r is for captainmeta4. s is for politics_mod_bot
                           #Yes, they share a rate limit
 
 #captainmeta4
-cap_refresh=os.environ.get('cap_refresh')
+#cap_refresh=os.environ.get('cap_refresh')
 
 #politics_mod_bot
-bot_refresh=os.environ.get('bot_refresh')
+#bot_refresh=os.environ.get('bot_refresh')
 
 #subreddits
 read_subreddit = r.get_subreddit('politics')
