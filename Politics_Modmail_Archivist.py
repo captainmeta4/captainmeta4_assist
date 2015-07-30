@@ -13,7 +13,7 @@ state="Politics Modmail Archiver"
 
 
 ##account names
-reader_account='captainmeta4'
+reader_account='politicsmoderatorbot'
 poster_account='politics_mod_bot'
 
 ##reddit instances
