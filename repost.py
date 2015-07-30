@@ -12,6 +12,7 @@ subredditname='mod'
 
 requires_params=[
     'c-span.org',
+    'defense.gov',
     'house.gov',
     'news-republic.com',
     'senate.gov',
