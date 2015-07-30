@@ -1,2 +1,2 @@
 politics: python repost.py
-archive: python Modmail_Archivist.py
+archive: python Politics_Modmail_Archivist.py
