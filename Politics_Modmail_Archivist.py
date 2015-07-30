@@ -46,8 +46,8 @@ class Bot():
         #print('refresh tokens used successfully')
 
         #Temporarily in place due to bug with praw where r.search does not work in private subreddits with OAuth
-        s.login('politics_mod_bot',os.environ.get('bot_pass'))
-        r.login('captainmeta4',os.environ.get('cap_pass'))
+        s.login(poster_account,os.environ.get('bot_pass'))
+        r.login(reader_account,os.environ.get('cap_pass'))
         print('logins successful')
         
     def message_string(self, message):
