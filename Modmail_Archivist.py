@@ -84,7 +84,7 @@ class Bot():
 
     def archive_modmail(self):
 
-        for modmail in r.get_mod_mail(subreddit=read_subreddit, limit=100):
+        for modmail in r.get_mod_mail(subreddit=read_subreddit, limit=1000):
 
             #Begin assembling text, starting with permalink
             archive_text = 'http://www.reddit.com/message/messages/'+modmail.id+'\n\n---\n\n'
