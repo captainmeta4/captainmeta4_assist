@@ -19,7 +19,7 @@ username='Modmail_Archivist'
 
 
 ##reddit instances
-user_agent=("Politics Modmail Archiver - /u/captainmeta4")
+user_agent=("Modmail Archivist - /u/captainmeta4")
 r=praw.Reddit(user_agent)
 
 
