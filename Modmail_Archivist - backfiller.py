@@ -19,7 +19,7 @@ username='Modmail_Archivist'
 
 
 ##reddit instances
-user_agent=("Modmail Archivist - /u/captainmeta4")
+user_agent=("Politics Modmail Archiver - /u/captainmeta4")
 r=praw.Reddit(user_agent)
 
 
@@ -77,8 +77,9 @@ class Bot():
         ##Subreddit/archive mappings
         mappings = json.loads(r.get_wiki_page('captainmeta4bots','archivist').content_md)
 
-        i=-1
-        for modmail in r.get_mod_mail('mod', limit=1000):
+        subreddit = input("subreddit to scrape mail from: ")
+        i=0
+        for modmail in r.get_mod_mail(subreddit, limit=None):
             #Get the corresponding archive subreddit - if there isn't one then skip modmail
             #This is necessary to prevent it spending time trying to archive modmail in archive subreddits
             if str(modmail.subreddit).lower() not in mappings:
@@ -118,9 +119,9 @@ class Bot():
                     continue
 
                 #Check to see if nothing has changed, and if so, stop (because we're out of modmails to do since last cycle)
-                if submission.selftext == archive_text:
-                    print('all done for now. %(i)s threads archived or updated' % {"i":str(i)})
-                    return
+                #if submission.selftext == archive_text:
+                #    print('all done for now')
+                #    return
 
                 submission.edit(archive_text)
                 print('submission edited')
@@ -130,6 +131,9 @@ class Bot():
                 #If there isn't an existing submission, make one and self-approve it
                 r.submit(archive_subreddit, modmail.subject, text=archive_text).approve()
                 print('new submission created')
+
+            print('all done for now. %(i)s threads archived or updated' % {"i":str(i)})
+                    
                 
 
 if __name__=='__main__':
