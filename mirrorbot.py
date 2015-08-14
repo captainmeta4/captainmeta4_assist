@@ -62,17 +62,19 @@ class Bot():
 
 
     def mirror_mod(self):
+        #Mirror certain types of mod actions
 
         #Keep a temporary list of things that have already been acted on this cycle.
         #This ensures that in the case of multiple approve/remove, only the most recent action is mirrored
         items_acted_on = []
         users_acted_on = []
+        automod_updated = False
         
         #Check /about/modlog and mirror actions as needed
         for entry in source.get_mod_log(limit=100):
 
             #ignore most actions
-            if entry.action not in ['approvelink','removelink','banuser','unbanuser']:
+            if entry.action not in ['approvelink','removelink','banuser','unbanuser','wikirevise']:
                 continue
 
             #Don't act on the same entry twice
@@ -86,11 +88,13 @@ class Bot():
             elif (entry.action in ['banuser','unbanuser']
                   and entry.target_author in users_acted_on):
                 continue
-
-            #keep track of what we've done
-            data['modlog'].append(entry.id)
+            elif (entry.action =='wikirevise'
+                  and automod_updated):
+                continue
 
             #begin mirroring process
+
+            #mirror approvals/removals
             if entry.action in ['approvelink','removelink']:
 
                 #avoid conflicting actions
@@ -99,7 +103,6 @@ class Bot():
                 #Find corresponding mirror post
                 #If none, continue
                 if entry.target_fullname not in data['mappings']:
-                    
                     continue
 
                 mirror_post = r.get_info(data['mappings'][entry.target_fullname])
@@ -109,6 +112,17 @@ class Bot():
                 if entry.action == 'removelink':
                     mirror_post.remove()
                 
-                
+            #mirror bans/unbans    
             elif entry.action in ['banuser','unbanuser']:
                 users_acted_on.append(entry.target_author)
+
+                if entry.action=='banuser':
+                    mirror.add_ban(entry.target_author)
+                elif entry.action=='unbanuser':
+                    mirror.remove_ban(entry.target_author)
+
+            #mirror automod config
+            
+
+            #keep track of what we've done
+            data['modlog'].append(entry.id)
