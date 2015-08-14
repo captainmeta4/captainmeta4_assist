@@ -1,3 +1,5 @@
+[wip]
+
 import praw
 import json
 from collections import deque
@@ -49,9 +51,10 @@ class Bot():
 
         data['mappings'][submission.fullname] = post.fullname
 
+        return post
+
     def mirror_new(self):
-        #Check /new for any submissions and mirror them.\
-        #Record the id pairings
+        #Check /new for any submissions and mirror them.
         for submission in source.get_new(limit=100):
 
             #avoid duplicate posts
@@ -101,10 +104,8 @@ class Bot():
                 items_acted_on.append(entry.target_fullname)
 
                 #Find corresponding mirror post
-                #If none, continue
                 if entry.target_fullname not in data['mappings']:
                     continue
-
                 mirror_post = r.get_info(data['mappings'][entry.target_fullname])
 
                 if entry.action == 'approvelink':
@@ -122,7 +123,23 @@ class Bot():
                     mirror.remove_ban(entry.target_author)
 
             #mirror automod config
+            if (entry.action == 'wikirevise'
+                and entry.details == 'Updated AutoModerator configuration'
+                and not automod_updated):
+                
+                automod = r.get_wiki_page(source,'config/automoderator').content_md
+                r.edit_wiki_page(mirror,'config/automoderator',automod)
+
+                automod_updated = True
+            
             
 
             #keep track of what we've done
             data['modlog'].append(entry.id)
+
+            
+            
+            
+
+            
+        
