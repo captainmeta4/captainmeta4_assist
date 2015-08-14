@@ -132,7 +132,7 @@ class Bot():
                 r.submit(archive_subreddit, modmail.subject, text=archive_text).approve()
                 print('new submission created')
 
-            print('all done for now. %(i)s threads archived or updated' % {"i":str(i)})
+        print('all done for now. %(i)s threads archived or updated' % {"i":str(i)})
                     
                 
 
