@@ -1,5 +1,3 @@
-## [WIP] ##
-
 import praw
 import json
 from collections import deque
@@ -39,24 +37,29 @@ class Bot():
             cache[entry]=str(cache[entry])
         r.edit_wiki_page('captainmeta4bots','mirrorbot',json.dumps(cache))
 
+    def mirror_submission(self, submission):
+        
+        #mirror the post
+        if submission.is_self:
+            post = r.submit(mirror, title=submission.title, text = submission.selftext, resubmit=True)
+        else:
+            post = r.submit(mirror, title=submission.title, url=submission.url, resubmit=True)
+
+        #Add id pairing to mappings
+
+        data['mappings'][submission.fullname] = post.fullname
+
     def mirror_new(self):
         #Check /new for any submissions and mirror them.\
         #Record the id pairings
         for submission in source.get_new(limit=100):
 
             #avoid duplicate posts
-            if submission.id in data['mappings']:
+            if submission.fullname in data['mappings']:
                 continue
 
-            #mirror the post
-            if submission.is_self:
-                post = r.submit(mirror, title=submission.title, text = submission.selftext, resubmit=True)
-            else:
-                post = r.submit(mirror, title=submission.title, url=submission.url, resubmit=True)
+            self.mirror_submission(submission)
 
-            #Add id pairing to mappings
-
-            data['mappings'][submission.id] = post.id
 
     def mirror_mod(self):
 
@@ -87,14 +90,25 @@ class Bot():
             #keep track of what we've done
             data['modlog'].append(entry.id)
 
+            #begin mirroring process
             if entry.action in ['approvelink','removelink']:
+
+                #avoid conflicting actions
                 items_acted_on.append(entry.target_fullname)
+
+                #Find corresponding mirror post
+                #If none, continue
+                if entry.target_fullname not in data['mappings']:
+                    
+                    continue
+
+                mirror_post = r.get_info(data['mappings'][entry.target_fullname])
+
+                if entry.action == 'approvelink':
+                    mirror_post.approve()
+                if entry.action == 'removelink':
+                    mirror_post.remove()
+                
+                
             elif entry.action in ['banuser','unbanuser']:
                 users_acted_on.append(entry.target_author)
-
-            
-            
-            
-
-            
-        
