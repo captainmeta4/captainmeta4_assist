@@ -179,7 +179,7 @@ class Bot():
             reply = self.generate_sentence(text=post.title)
             post.add_comment(reply)
             
-            repond to messages
+            #repond to messages
             for message in r.get_unread(limit=None):
                 message.mark_as_read()
                 reply = self.generate_sentence(text=message.body)
