@@ -193,7 +193,7 @@ class Bot():
             for subredditname in subreddits:
                 self.run_cycle(subredditname)
                 
-            time.sleep(60*15)
+            time.sleep(60*60)
 
             
 
