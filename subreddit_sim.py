@@ -54,7 +54,7 @@ class Bot():
 
     def generate_corpus(self, subreddit):
 
-        print("generating corpus...")
+        print("generating corpus for /r/"+str(subreddit)+"...")
         #loads comments and generates a dictionary of
         #  {('word1','word2'): ['word3','word4','word5'...]...}
 
@@ -182,7 +182,7 @@ class Bot():
             #repond to messages
             for message in r.get_unread(limit=None):
                 message.mark_as_read()
-                message.reply(self.generate_sentence(text=message.body)
+                message.reply(self.generate_sentence(text=message.body))
                 
                 
     def run(self):
