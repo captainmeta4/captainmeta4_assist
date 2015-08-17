@@ -170,7 +170,7 @@ class Bot():
             post = self.get_random_hot(subreddit, 25)
             print(post.title)
             reply = self.generate_sentence(text=post.title)
-            #post.add_comment(reply)
+            post.add_comment(reply)
 
         print("")
         
@@ -178,15 +178,15 @@ class Bot():
         post = self.get_random_new(subreddit, 25)
         print(post.title)
         reply = self.generate_sentence(text=post.title)
-        #post.add_comment(reply)
+        post.add_comment(reply)
 
     def run(self):
         
         while True:
 
             for subredditname in subreddits:
-                
                 self.run_cycle(subredditname)
+                
             time.sleep(60*10)
 
             
