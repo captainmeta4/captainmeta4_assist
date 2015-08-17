@@ -128,27 +128,17 @@ class Bot():
         else:
             return random.choice(self.starters)
 
-    def get_random_hot(self, subreddit, x):
-        #returns a random submission within the top X of /hot
+    def get_random_comment(self, subreddit, x):
+        #returns a random submission within the new X of /hot
 
         #reset x to random
         x=random.randint(1,x)
 
         #get the x'th post and return it
-        for submission in subreddit.get_hot(limit=x):
+        for comment in subreddit.get_comments(limit=x):
             post = submission
 
         return post
-
-    def get_random_new(self, subreddit, x):
-        #returns a random submission within the top X of /new
-
-        #reset x to random
-        x=random.randint(1,x)
-
-        #get the x'th post and return it
-        for submission in subreddit.get_new(limit=x):
-            post = submission
 
         return post
 
@@ -163,26 +153,18 @@ class Bot():
         self.generate_corpus(subreddit)
         
         #Comment on random post from /new
-        post = self.get_random_new(subreddit, 25)
+        post = self.get_random_comment(subreddit, 100)
         print(post.title)
         reply = self.generate_sentence(text=post.title)
         post.add_comment(reply)
         
         print("")
-        
-        #accounts with ratelimits
-        if subredditname not in ['runescape']:
-            #Comment on random post from /hot
-            post = self.get_random_hot(subreddit, 25)
-            print(post.title)
-            reply = self.generate_sentence(text=post.title)
-            post.add_comment(reply)
             
-            #repond to messages
-            for message in r.get_unread(limit=None):
-                message.mark_as_read()
-                reply = self.generate_sentence(text=message.body)
-                message.reply(reply)
+        #repond to messages
+        for message in r.get_unread(limit=None):
+            message.mark_as_read()
+            reply = self.generate_sentence(text=message.body)
+            message.reply(reply)
                 
                 
     def run(self):
