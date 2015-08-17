@@ -110,6 +110,7 @@ class bot():
                     "If you have any questions about this removal, please feel free to [message the moderators.](https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/%(author)s&message=I have a question regarding the removal of this [submission.](%(url)s\))"
                     % {"author":str(submission.author), "id":searchresult.id, "url":submission.permalink}
                     ).distinguish()
+                submission.set_flair(flair_text="Already Submitted")
                 break
 
     def run(self):
