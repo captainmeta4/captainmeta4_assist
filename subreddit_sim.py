@@ -7,7 +7,10 @@ r=praw.Reddit("Markov comment bot")
 
 ###Configs
 
-subreddit = r.get_subreddit('futurology')
+subreddits = [
+    'runescape',
+    'futurology'
+    ]
 
 #oauth stuff
 client_id = os.environ.get('client_id')
@@ -19,9 +22,9 @@ r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_c
 ###End Configs
 
 class Bot():
-    
-    def auth(self):
-        r.refresh_access_information(refresh_token)
+
+    def auth(self, subredditname):
+        r.refresh_access_information(os.environ.get(subredditname))
 
     def text_to_triples(self, text):
         #generates triples given text
@@ -50,7 +53,7 @@ class Bot():
             yield (data[i], data[i+1])
         
 
-    def generate_corpus(self):
+    def generate_corpus(self, subreddit):
 
         print("generating corpus...")
         #loads comments and generates a dictionary of
@@ -90,6 +93,7 @@ class Bot():
         key = self.create_starter(text)
         sentence = self.continue_sentence(key)
         print(sentence)
+        return sentence
 
 
     def continue_sentence(self, key):
@@ -125,15 +129,65 @@ class Bot():
             return random.choice(possible_starters)
         else:
             return random.choice(self.starters)
+
+    def get_random_hot(self, subreddit, x):
+        #returns a random submission within the top X of /hot
+
+        #reset x to random
+        x=random.randint(1,x)
+
+        #get the x'th post and return it
+        for submission in subreddit.get_hot(limit=x):
+            post = submission
+
+        return post
+
+    def get_random_new(self, subreddit, x):
+        #returns a random submission within the top X of /new
+
+        #reset x to random
+        x=random.randint(1,x)
+
+        #get the x'th post and return it
+        for submission in subreddit.get_new(limit=x):
+            post = submission
+
+        return post
+
+    def run_cycle(self, subredditname):
+        
+        #refresh token
+        self.auth(subredditname)
+
+        subreddit = r.get_subreddit(subredditname)
             
-    def run():
+        #remake the corpus
+        self.generate_corpus(subreddit)
+
+        #accounts with ratelimits
+        if subredditname not in ['runescape']:
+            #Comment on random post from /hot
+            post = self.get_random_hot(subreddit, 25)
+            print(post.title)
+            reply = self.generate_sentence(text=post.title)
+            #post.add_comment(reply)
+
+        print("")
+        
+        #Comment on random post from /new
+        post = self.get_random_new(subreddit, 25)
+        print(post.title)
+        reply = self.generate_sentence(text=post.title)
+        #post.add_comment(reply)
+
+    def run(self):
+        
         while True:
 
-            #refresh token
-            self.auth()
-            
-            #update the corpus
-            self.generate_corpus()
+            for subredditname in subreddits:
+                
+                self.run_cycle(subredditname)
+            time.sleep(60*10)
 
             
 
