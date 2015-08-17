@@ -8,7 +8,6 @@ r=praw.Reddit("Markov comment bot")
 ###Configs
 
 subreddits = [
-    'runescape',
     'futurology'
     ]
 
