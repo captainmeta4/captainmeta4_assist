@@ -9,11 +9,19 @@ r=praw.Reddit("Markov comment bot")
 
 subreddit = r.get_subreddit('futurology')
 
+#oauth stuff
+client_id = os.environ.get('client_id')
+client_secret = os.environ.get('client_secret')
+refresh_token = os.environ.get('refresh_token')
+r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_callback')
 
 
 ###End Configs
 
 class Bot():
+    
+    def auth(self):
+        r.refresh_access_information(refresh_token)
 
     def text_to_triples(self, text):
         #generates triples given text
@@ -117,9 +125,18 @@ class Bot():
             return random.choice(possible_starters)
         else:
             return random.choice(self.starters)
+            
+    def run():
+        while True:
 
+            #refresh token
+            self.auth()
+            
+            #update the corpus
+            self.generate_corpus()
+
+            
 
 if __name__=="__main__":
     bot=Bot()
-    bot.generate_corpus()
-    bot.generate_sentence()
+    bot.run()
