@@ -15,7 +15,6 @@ subreddits = [
 #oauth stuff
 client_id = os.environ.get('client_id')
 client_secret = os.environ.get('client_secret')
-refresh_token = os.environ.get('refresh_token')
 r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_callback')
 
 
@@ -187,7 +186,7 @@ class Bot():
             for subredditname in subreddits:
                 self.run_cycle(subredditname)
                 
-            time.sleep(60*10)
+            time.sleep(60*15)
 
             
 
