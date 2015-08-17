@@ -2,6 +2,7 @@
 
 import praw
 import json
+import time
 from collections import deque
 from collections import OrderedDict
 
@@ -11,10 +12,10 @@ from collections import OrderedDict
 r=praw.Reddit('Subreddit mirror bot')
 
 #Subreddit to scrape
-source = r.get_subreddit('')
+source = r.get_subreddit('watchpeopledie')
 
 #Subreddit to act as mirror
-mirror = r.get_subreddit('')
+mirror = r.get_subreddit('wpd_de')
 
 #Already-processed and mappings. Eval is necessary due to use of deques and ordereddicts
 data = json.loads(r.get_wiki_page('captainmeta4bots','mirrorbot').content_md)
@@ -136,8 +137,19 @@ class Bot():
 
             #keep track of what we've done
             data['modlog'].append(entry.id)
-
-            
+    
+    def auth(self):
+        #Replace this with OAuth shenanigans once it stops being broken
+        r.login('wpd_de',os.environ.get('password'))
+    
+    def run(self):
+        
+        self.login()
+        while True():
+            self.mirror_new()
+            self.mirror_mod()
+            self.save_cache()
+            time.sleep(30)
             
             
 
