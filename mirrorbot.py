@@ -123,13 +123,18 @@ class Bot():
                 elif entry.action=='unbanuser':
                     mirror.remove_ban(entry.target_author)
 
-            #mirror automod config
+            #mirror automod config, keeping any mirror-specific rules at the top
             if (entry.action == 'wikirevise'
                 and entry.details == 'Updated AutoModerator configuration'
                 and not automod_updated):
                 
-                automod = r.get_wiki_page(source,'config/automoderator').content_md
-                r.edit_wiki_page(mirror,'config/automoderator',automod)
+                source_automod = r.get_wiki_page(source,'config/automoderator').content_md
+                mirror_automod = r.get_wiki_page(mirror,'config/automoderator').content_md
+                
+                split_string = '#--mirror below--#'
+                mirror_automod = mirror_automod.split(split_string)[0] + split_string
+                
+                r.edit_wiki_page(mirror,'config/automoderator',mirror_automod+source_automod)
 
                 automod_updated = True
             
