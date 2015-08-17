@@ -127,20 +127,32 @@ class Bot():
 
     def run_cycle(self, username):
         
+        user2=""
 
+        while True:
 
-        user = r.get_redditor(username)
+            username = input('user: ')
             
-        #remake the corpus
-        self.generate_corpus(user)
+            if username != user2:
+                user=r.get_redditor(username)
+                self.generate_corpus(user)
+                user2=username
+            try:
+                comment = ("/u/"+str(user)+
+                           "\n\n* "+self.generate_sentence()+
+                           "\n\n* "+self.generate_sentence()+
+                           "\n\n* "+self.generate_sentence()
+                           )
+                print(comment)
+            except:
+                pass
         
         
     def run(self):
         
-        self.auth()
+        #self.auth()
         
-        while True:
-            self.run_cycle(input('user: '))
+        self.run_cycle()
 
             
 
