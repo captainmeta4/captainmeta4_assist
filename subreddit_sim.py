@@ -129,17 +129,15 @@ class Bot():
             return random.choice(self.starters)
 
     def get_random_comment(self, subreddit, x):
-        #returns a random submission within the new X of /hot
+        #returns a random comment within the newest X
 
         #reset x to random
         x=random.randint(1,x)
 
         #get the x'th post and return it
         for comment in subreddit.get_comments(limit=x):
-            post = submission
-
-        return post
-
+            post = comment
+            
         return post
 
     def run_cycle(self, subredditname):
@@ -154,8 +152,7 @@ class Bot():
         
         #Comment on random post from /new
         post = self.get_random_comment(subreddit, 100)
-        print(post.title)
-        reply = self.generate_sentence(text=post.title)
+        reply = self.generate_sentence(text=post.body)
         post.add_comment(reply)
         
         print("")
