@@ -65,9 +65,8 @@ class bot():
                 params=''
                 query=''
                 
-            #strip mobile. or m. subdomain away from netloc
+            #strip mobile. subdomain away from netloc
             netloc=ParsedURL[1]
-            netloc=netloc.replace('m.','',1)
             netloc=netloc.replace('mobile.','',1)
                 
             #strip fragments and assemble url to search for,
