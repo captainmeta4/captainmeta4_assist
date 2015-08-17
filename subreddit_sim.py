@@ -180,10 +180,10 @@ class Bot():
             post.add_comment(reply)
             
             #repond to messages
-            for message in r.get_unread(limit=None):
-                message.mark_as_read()
-                reply = self.generate_sentence(text=message.body)
-                message.reply(reply)
+            #for message in r.get_unread(limit=None):
+            #    message.mark_as_read()
+            #    reply = self.generate_sentence(text=message.body)
+            #    message.reply(reply)
                 
                 
     def run(self):
