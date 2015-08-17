@@ -7,11 +7,6 @@ r=praw.Reddit("Markov user analysis bot")
 
 ###Configs
 
-users = [
-    'Deimorz',
-    'krispykrackers'
-    ]
-
 #oauth stuff
 #client_id = os.environ.get('client_id')
 #client_secret = os.environ.get('client_secret')
