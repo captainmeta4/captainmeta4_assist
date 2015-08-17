@@ -182,7 +182,8 @@ class Bot():
             #repond to messages
             for message in r.get_unread(limit=None):
                 message.mark_as_read()
-                message.reply(self.generate_sentence(text=message.body))
+                reply = self.generate_sentence(text=message.body)
+                message.reply(reply)
                 
                 
     def run(self):
