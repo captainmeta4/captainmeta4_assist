@@ -153,7 +153,7 @@ class Bot():
         #Comment on random post from /new
         post = self.get_random_comment(subreddit, 100)
         reply = self.generate_sentence(text=post.body)
-        post.add_comment(reply)
+        post.reply(reply)
         
         print("")
             
