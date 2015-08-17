@@ -162,7 +162,15 @@ class Bot():
             
         #remake the corpus
         self.generate_corpus(subreddit)
-
+        
+        #Comment on random post from /new
+        post = self.get_random_new(subreddit, 25)
+        print(post.title)
+        reply = self.generate_sentence(text=post.title)
+        post.add_comment(reply)
+        
+        print("")
+        
         #accounts with ratelimits
         if subredditname not in ['runescape']:
             #Comment on random post from /hot
@@ -170,15 +178,13 @@ class Bot():
             print(post.title)
             reply = self.generate_sentence(text=post.title)
             post.add_comment(reply)
-
-        print("")
-        
-        #Comment on random post from /new
-        post = self.get_random_new(subreddit, 25)
-        print(post.title)
-        reply = self.generate_sentence(text=post.title)
-        post.add_comment(reply)
-
+            
+            #repond to messages
+            for message in r.get_unread(limit=None):
+                message.mark_as_read()
+                message.reply(self.generate_sentence(text=message.body)
+                
+                
     def run(self):
         
         while True:
