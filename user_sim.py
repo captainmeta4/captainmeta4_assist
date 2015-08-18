@@ -205,7 +205,7 @@ class Bot():
         #z% chance of making a child comment
         i = random.randint(1,100)
         
-        if i<=10:
+        if i<=15:
             #title is first sentence
             title = re.split("(?<=[.?!]) ",text,maxsplit=1)[0]
             r.submit(subreddit,title,text=text)
