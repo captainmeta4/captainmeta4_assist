@@ -159,6 +159,18 @@ class Bot():
             post = comment
             
         return post
+    
+    def get_random_new(self, subreddit, x):
+        #returns a random submission within the top X of /new
+
+        #reset x to random
+        x=random.randint(1,x)
+
+        #get the x'th post and return it
+        for submission in subreddit.get_new(limit=x):
+            post = submission
+
+        return post
 
     def run_cycle(self):
         
@@ -186,12 +198,17 @@ class Bot():
         #z% chance of making a child comment
         i = random.randint(1,100)
         
-        if i<=100:
+        if i<=1:
             #title is first sentence
             self.output=text
             title = re.split("(?<=[.?!]) ",self.text,maxsplit=1)[0]
             r.submit(subreddit,title,text=text)
-            
+        elif i<=100:
+            post = self.get_random_new(25)
+            post.add_comment(text)
+        else:
+            comment = self.get_random_comment(100)
+            comment.reply(text)
         
         
     def run(self):
