@@ -222,7 +222,7 @@ class Bot():
         
         while True:
             self.run_cycle()
-            time.sleep(60*1)
+            time.sleep(int(os.environ.get('delay')))
 
             
 
