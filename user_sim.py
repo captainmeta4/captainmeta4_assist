@@ -3,16 +3,17 @@ import time
 import os
 import random
 
-r=praw.Reddit("Markov user analysis bot")
+r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 
 ###Configs
 
-#oauth stuff
-#client_id = os.environ.get('client_id')
-#client_secret = os.environ.get('client_secret')
-#r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_callback')
+#userlist
 
-user2=[]
+
+#oauth stuff
+client_id = os.environ.get('client_id')
+client_secret = os.environ.get('client_secret')
+r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_callback')
 
 ###End Configs
 
@@ -95,21 +96,25 @@ class Bot():
         print("Corpus for /u/"+str(user)+" is "+str(len(self.corpus))+" entries")
         
 
-    def generate_sentence(self, text=""):
+    def generate_text(self, text=""):
         key = self.create_starter(text)
-        sentence = self.continue_sentence(key)
+        sentence = self.continue_text(key)
         return sentence
 
-
-    def continue_sentence(self, key):
+    def continue_text(self, key):
 
         #start the output based on a key of ('word1','word2)
         output = key[0]+" "+key[1]
 
-        #Add words until we hit a sentance-ender or a key not in the corpus
-        while not ((output.endswith(".") and not output.endswith("..."))
-                   or output.endswith("!")
-                   or output.endswith("?")):
+        #Add words until we hit text-ending criteria or a key not in the corpus
+        while True:
+
+            if (len(output.split())> length and
+                ((output.endswith(".") and not output.endswith("..."))
+                 or output.endswith("!")
+                 or output.endswith("?"))
+                ):
+                break
 
             if key not in self.corpus:
                 break
@@ -118,7 +123,6 @@ class Bot():
             output += " " + next_word
 
             key = (key[1], next_word)
-
         return(output)
 
     def create_starter(self, text):
