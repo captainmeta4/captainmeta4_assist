@@ -14,6 +14,7 @@ mappings = {
     'Deimorz':'Deimorz_sim',
     'Drunken_Economist':'Drunken_Econ_Sim',
     'ekjp':'ekjp_sim',
+    'kn0thing':'kn0thing_sim',
     'KrispyKrackers':'KrispyKrackers_sim',
     'spez':'spez_sim',
     'sporkicide':'sporkicide_sim',
