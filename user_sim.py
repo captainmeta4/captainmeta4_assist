@@ -116,6 +116,8 @@ class Bot():
         # fix formatting
         output = re.sub(" \* ","\n\n* ",output)
         output = re.sub(" > ","\n\n> ",output)
+        output = re.sub(" \d+\. ","\n\n1. ", output)
+        
         return output
 
     def continue_text(self, key):
