@@ -28,7 +28,7 @@ r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_c
 class Bot():
 
     def auth(self, username):
-        #r.refresh_access_information(os.environ.get(keyname))
+        #r.refresh_access_information(os.environ.get(username))
         r.login(mappings[username],os.environ.get('password'))
 
     def text_to_triples(self, text):
@@ -107,6 +107,10 @@ class Bot():
     def generate_text(self, text=""):
         key = self.create_starter(text)
         output = self.continue_text(key)
+
+        # fix formatting
+        output = re.sub(" \* ","\n\n* ",output)
+        output = re.sub(" > ","\n\n> ",output)
         return output
 
     def continue_text(self, key):
@@ -199,12 +203,11 @@ class Bot():
         #z% chance of making a child comment
         i = random.randint(1,100)
         
-        if i<=1:
+        if i<=10:
             #title is first sentence
-            self.output=text
-            title = re.split("(?<=[.?!]) ",self.text,maxsplit=1)[0]
+            title = re.split("(?<=[.?!]) ",text,maxsplit=1)[0]
             r.submit(subreddit,title,text=text)
-        elif i<=100:
+        elif i<=30:
             post = self.get_random_new(25)
             post.add_comment(text)
         else:
@@ -216,7 +219,7 @@ class Bot():
         
         while True:
             self.run_cycle()
-            time.sleep(60*10)
+            time.sleep(60*1)
 
             
 
