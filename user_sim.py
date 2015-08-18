@@ -2,6 +2,7 @@ import praw
 import time
 import os
 import random
+import re
 
 r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 
@@ -104,8 +105,8 @@ class Bot():
 
     def generate_text(self, text=""):
         key = self.create_starter(text)
-        sentence = self.continue_text(key)
-        return sentence
+        output = self.continue_text(key)
+        return output
 
     def continue_text(self, key):
 
@@ -172,10 +173,11 @@ class Bot():
         self.generate_corpus(user)
         
         try:
-            text = self.generate_text
-            print(comment)
+            text = self.generate_text()
         except:
             return
+        
+        print(text)
             
         #x% chance of making this as a new post
         #y% chance of making a top-level comment on existing post
@@ -184,7 +186,8 @@ class Bot():
         
         if i<=100:
             #title is first sentence
-            title = re.split("(?<=[.?!]) ",text,maxsplit=1)[0]
+            self.output=text
+            title = re.split("(?<=[.?!]) ",self.text,maxsplit=1)[0]
             r.submit(subreddit,title,text=text)
             
         
