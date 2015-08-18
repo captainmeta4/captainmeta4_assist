@@ -14,6 +14,7 @@ mappings = {
     'Deimorz':'Deimorz_sim',
     'KrispyKrackers':'KrispyKrackers_sim',
     'spez':'spez_sim'
+    'sporkicide':'sporkicide_sim'
     'yishan':'yishan_sim'
     }
 
