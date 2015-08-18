@@ -31,6 +31,8 @@ class Bot():
         if len(data) < 3:
             return
 
+        self.lengths.append(len(data))
+
         #iterate through triples
         for i in range(len(data)-2):
             yield (data[i], data[i+1], data[i+2])
@@ -57,6 +59,8 @@ class Bot():
 
         self.corpus = {}
         self.starters = []
+        self.lengths = []
+        
         #for every comment
         for comment in user.get_comments(limit=1000):
 
@@ -82,6 +86,7 @@ class Bot():
                     start_of_comment=False
 
                 #add to corpus
+
                 if key in self.corpus:
                     self.corpus[key].append(triple[2])
                 else:
@@ -129,9 +134,18 @@ class Bot():
             return random.choice(possible_starters)
         else:
             return random.choice(self.starters)
+        
+    def generate_text(self, text=""):
+        length = random.choice(self.lengths)
 
+        output = self.generate_sentence(text)
 
-    def run_cycle(self, username):
+        while len(output.split())<length:
+            output += " " + self.generate_sentence(text)
+
+        return output
+
+    def run_cycle(self):
         
         user2=""
 
@@ -145,9 +159,9 @@ class Bot():
                 user2=username
             try:
                 comment = ("/u/"+str(user)+
-                           "\n\n* "+self.generate_sentence()+
-                           "\n\n* "+self.generate_sentence()+
-                           "\n\n* "+self.generate_sentence()
+                           "\n\n* "+self.generate_text()+
+                           "\n\n* "+self.generate_text()+
+                           "\n\n* "+self.generate_text()
                            )
                 print(comment)
             except:

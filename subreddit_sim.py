@@ -33,6 +33,8 @@ class Bot():
         if len(data) < 3:
             return
 
+        self.lengths.append(len(data))
+
         #iterate through triples
         for i in range(len(data)-2):
             yield (data[i], data[i+1], data[i+2])
@@ -59,6 +61,7 @@ class Bot():
 
         self.corpus = {}
         self.starters = []
+        self.lengths = []
         #for every comment
         for comment in r.get_comments(subreddit, limit=1000):
 
@@ -84,6 +87,8 @@ class Bot():
                     self.corpus[key].append(triple[2])
                 else:
                     self.corpus[key] = [triple[2]]
+
+                
         print("...done")
         
 
@@ -140,6 +145,16 @@ class Bot():
             
         return post
 
+    def generate_text(self, text=""):
+        length = random.choice(self.lengths)
+
+        output = self.generate_sentence(text)
+
+        while len(output.split())<length:
+            output += " " + self.generate_sentence(text)
+
+        return output
+
     def run_cycle(self, subredditname):
         
         #refresh token
@@ -152,7 +167,7 @@ class Bot():
         
         #Comment on random post from /new
         post = self.get_random_comment(subreddit, 100)
-        reply = self.generate_sentence(text=post.body)
+        reply = self.generate_text(text=post.body)
         post.reply(reply)
         
         print("")
