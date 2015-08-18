@@ -206,11 +206,11 @@ class Bot():
         #z% chance of making a child comment
         i = random.randint(1,100)
         
-        if i<=15:
+        if i<=int(os.environ.get('submit')):
             #title is first sentence
             title = re.split("(?<=[.?!]) ",text,maxsplit=1)[0]
             r.submit(subreddit,title,text=text)
-        elif i<=30:
+        elif i<=int(os.environ.get('parent')):
             post = self.get_random_new(10)
             post.add_comment(text)
         else:
