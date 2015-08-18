@@ -184,7 +184,7 @@ class Bot():
         
     def run(self):
         
-        While True:
+        while True:
             self.run_cycle()
             time.sleep(60*10)
 
