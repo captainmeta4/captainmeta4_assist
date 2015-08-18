@@ -8,10 +8,10 @@ r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 ###Configs
 
 #userlist
-userlist = [
-    'chooter',
-    'Deimorz'
-    ]
+userlist = {
+    'chooter':'chooter_sim'
+    'Deimorz':'Deimorz_sim'
+    }
 
 subreddit = r.get_subreddit('AdminSimulator')
 
@@ -26,7 +26,7 @@ class Bot():
 
     def auth(self, keyname):
         #r.refresh_access_information(os.environ.get(keyname))
-        r.login(keyname,os.environ.get('password'))
+        r.login(userlist[keyname],os.environ.get('password'))
 
     def text_to_triples(self, text):
         #generates triples given text
