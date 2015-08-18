@@ -8,7 +8,7 @@ r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 ###Configs
 
 #userlist
-userlist = {
+mapping = {
     'chooter':'chooter_sim',
     'Deimorz':'Deimorz_sim',
     'yishan':'yishan_sim'
@@ -160,6 +160,9 @@ class Bot():
     def run_cycle(self):
         
         #pick a random admin
+        userlist=[]
+        for admin in mapping:
+            userlist.append(item)
         username = random.choice(userlist)
         
         #auth as correspondign sim bot
