@@ -161,6 +161,9 @@ class Bot():
         #pick a random admin
         username = random.choice(userlist)
         
+        #auth as correspondign sim bot
+        self.auth(username)
+        
         user=r.get_redditor(username)
         self.generate_corpus(user)
         
