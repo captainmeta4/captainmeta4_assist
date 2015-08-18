@@ -12,6 +12,7 @@ r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 mappings = {
     'chooter':'chooter_sim',
     'Deimorz':'Deimorz_sim',
+    'KrispyKrackers':'KrispyKrackers_sim',
     'yishan':'yishan_sim'
     }
 
