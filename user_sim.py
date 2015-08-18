@@ -13,6 +13,7 @@ mappings = {
     'chooter':'chooter_sim',
     'Deimorz':'Deimorz_sim',
     'KrispyKrackers':'KrispyKrackers_sim',
+    'spez':'spez_sim'
     'yishan':'yishan_sim'
     }
 
