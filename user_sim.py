@@ -25,8 +25,8 @@ r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_c
 class Bot():
 
     def auth(self, keyname):
-        r.refresh_access_information(os.environ.get(keyname))
-        #r.login('captainmeta4',input('password: '))
+        #r.refresh_access_information(os.environ.get(keyname))
+        r.login(keyname,os.environ.get('password'))
 
     def text_to_triples(self, text):
         #generates triples given text
