@@ -11,7 +11,7 @@ username='PoliticsModeratorBot'
 subredditname='mod'
 
 requires_params=[
-    'ap.org',
+    'hosted.ap.org',
     'c-span.org',
     'defense.gov',
     'house.gov',
