@@ -92,20 +92,24 @@ class Bot():
         print("...done")
         
 
-    def generate_sentence(self, text=""):
+    def generate_text(self, text=""):
+        
         key = self.create_starter(text)
-        sentence = self.continue_sentence(key)
+        sentence = self.continue_text(key)
         print(sentence)
         return sentence
 
 
-    def continue_sentence(self, key):
+    def continue_text(self, key):
+        
+        length = random.choice(self.lengths)
 
         #start the output based on a key of ('word1','word2)
         output = key[0]+" "+key[1]
 
         #Add words until we hit a sentance-ender or a key not in the corpus
-        while not ((output.endswith(".") and not output.endswith("..."))
+        while (len(output.split())<length
+                and not ((output.endswith(".") and not output.endswith("..."))
                    or output.endswith("!")
                    or output.endswith("?")):
 
@@ -144,16 +148,6 @@ class Bot():
             post = comment
             
         return post
-
-    def generate_text(self, text=""):
-        length = random.choice(self.lengths)
-
-        output = self.generate_sentence(text)
-
-        while len(output.split())<length:
-            output += " " + self.generate_sentence(text)
-
-        return output
 
     def run_cycle(self, subredditname):
         
