@@ -160,7 +160,7 @@ class Bot():
             
         return post
     
-    def get_random_new(self, subreddit, x):
+    def get_random_new(self, x):
         #returns a random submission within the top X of /new
 
         #reset x to random
