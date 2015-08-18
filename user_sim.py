@@ -130,8 +130,9 @@ class Bot():
         else:
             return random.choice(self.starters)
 
-    def run_cycle(self):
 
+    def run_cycle(self, username):
+        
         user2=""
 
         while True:
@@ -139,14 +140,9 @@ class Bot():
             username = input('user: ')
             
             if username != user2:
-                try:
-                    user=r.get_redditor(username)
-                    self.generate_corpus(user)
-                    user2=username
-                except:
-                    print('user not found')
-                    continue
-                    
+                user=r.get_redditor(username)
+                self.generate_corpus(user)
+                user2=username
             try:
                 comment = ("/u/"+str(user)+
                            "\n\n* "+self.generate_sentence()+

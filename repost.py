@@ -6,7 +6,7 @@ import os
 r=praw.Reddit(user_agent='reddit repost detector running under /u/captainmeta4')
 
 #Set globals
-username='captainmeta4'
+username='PoliticsModeratorBot'
 
 subredditname='mod'
 
@@ -65,9 +65,8 @@ class bot():
                 params=''
                 query=''
                 
-            #strip mobile. or m. subdomain away from netloc
+            #strip mobile. subdomain away from netloc
             netloc=ParsedURL[1]
-            netloc=netloc.replace('m.','',1)
             netloc=netloc.replace('mobile.','',1)
                 
             #strip fragments and assemble url to search for,
@@ -102,7 +101,16 @@ class bot():
 
                 #Flag as possible repost and break out of search results
                 print('repost detected')
-                submission.report(reason='Bot - possible repost - http://redd.it/'+searchresult.id)
+                submission.remove()
+                submission.add_comment(
+                    "Hi `%(author)s`. Thank you for participating in /r/Politics. However, your submission has been removed for the following reason:"
+                    "\n\n"
+                    "* Already Submitted: This article has already been submitted to /r/politics: http://redd.it/%(id)s"
+                    "\n\n"
+                    "If you have any questions about this removal, please feel free to [message the moderators.](https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/%(author)s&message=I have a question regarding the removal of this [submission.](%(url)s\))"
+                    % {"author":str(submission.author), "id":searchresult.id, "url":submission.permalink}
+                    ).distinguish()
+                submission.set_flair(flair_text="Already Submitted")
                 break
 
     def run(self):
