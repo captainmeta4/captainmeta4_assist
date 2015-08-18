@@ -7,16 +7,12 @@ r=praw.Reddit("Markov user analysis bot")
 
 ###Configs
 
-users = [
-    'Deimorz',
-    'krispykrackers'
-    ]
-
 #oauth stuff
 #client_id = os.environ.get('client_id')
 #client_secret = os.environ.get('client_secret')
 #r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_callback')
 
+user2=[]
 
 ###End Configs
 
@@ -65,7 +61,11 @@ class Bot():
         for comment in user.get_comments(limit=1000):
 
             #ignore mod comments
-            if comment.distinguished =="mod":
+            if comment.distinguished == "moderator":
+                continue
+
+            #ignore /r/spam comments
+            if str(comment.subreddit) == "spam":
                 continue
             
             #print("processing comment "+str(i))
@@ -87,12 +87,12 @@ class Bot():
                 else:
                     self.corpus[key] = [triple[2]]
         print("...done")
+        print("Corpus for /u/"+str(user)+" is "+str(len(self.corpus))+" entries")
         
 
     def generate_sentence(self, text=""):
         key = self.create_starter(text)
         sentence = self.continue_sentence(key)
-        print(sentence)
         return sentence
 
 
@@ -130,22 +130,39 @@ class Bot():
         else:
             return random.choice(self.starters)
 
-    def run_cycle(self, username):
-        
+    def run_cycle(self):
 
+        user2=""
 
-        user = r.get_redditor(username)
+        while True:
+
+            username = input('user: ')
             
-        #remake the corpus
-        self.generate_corpus(user)
+            if username != user2:
+                try:
+                    user=r.get_redditor(username)
+                    self.generate_corpus(user)
+                    user2=username
+                except:
+                    print('user not found')
+                    continue
+                    
+            try:
+                comment = ("/u/"+str(user)+
+                           "\n\n* "+self.generate_sentence()+
+                           "\n\n* "+self.generate_sentence()+
+                           "\n\n* "+self.generate_sentence()
+                           )
+                print(comment)
+            except:
+                pass
         
         
     def run(self):
         
-        self.auth()
+        #self.auth()
         
-        while True:
-            self.run_cycle(input('user: '))
+        self.run_cycle()
 
             
 
