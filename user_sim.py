@@ -12,6 +12,7 @@ r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 mappings = {
     'chooter':'chooter_sim',
     'Deimorz':'Deimorz_sim',
+    'ekjp':'ekjp_sim',
     'KrispyKrackers':'KrispyKrackers_sim',
     'spez':'spez_sim',
     'sporkicide':'sporkicide_sim',
@@ -210,7 +211,7 @@ class Bot():
             title = re.split("(?<=[.?!]) ",text,maxsplit=1)[0]
             r.submit(subreddit,title,text=text)
         elif i<=30:
-            post = self.get_random_new(25)
+            post = self.get_random_new(10)
             post.add_comment(text)
         else:
             comment = self.get_random_comment(100)
