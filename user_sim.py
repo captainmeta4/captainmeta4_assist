@@ -112,6 +112,8 @@ class Bot():
 
         #start the output based on a key of ('word1','word2)
         output = key[0]+" "+key[1]
+        
+        length = random.choice(self.lengths)
 
         #Add words until we hit text-ending criteria or a key not in the corpus
         while True:
