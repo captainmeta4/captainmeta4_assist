@@ -16,6 +16,7 @@ mappings = {
     'KrispyKrackers':'KrispyKrackers_sim',
     'spez':'spez_sim',
     'sporkicide':'sporkicide_sim',
+    'xiong_as_admin':'xiong_as_admin_sim',
     'yishan':'yishan_sim'
     }
 
