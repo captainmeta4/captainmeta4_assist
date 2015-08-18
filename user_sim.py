@@ -9,8 +9,9 @@ r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 
 #userlist
 userlist = {
-    'chooter':'chooter_sim'
-    'Deimorz':'Deimorz_sim'
+    'chooter':'chooter_sim',
+    'Deimorz':'Deimorz_sim',
+    'yishan':'yishan_sim'
     }
 
 subreddit = r.get_subreddit('AdminSimulator')
