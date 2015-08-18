@@ -162,7 +162,7 @@ class Bot():
         #pick a random admin
         userlist=[]
         for admin in mapping:
-            userlist.append(item)
+            userlist.append(admin)
         username = random.choice(userlist)
         
         #auth as correspondign sim bot
