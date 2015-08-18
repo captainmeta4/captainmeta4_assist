@@ -8,7 +8,12 @@ r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 ###Configs
 
 #userlist
+userlist = [
+    'chooter',
+    'Deimorz'
+    ]
 
+subreddit = r.get_subreddit('AdminSimulator')
 
 #oauth stuff
 client_id = os.environ.get('client_id')
@@ -19,9 +24,9 @@ r.set_oauth_app_info(client_id,client_secret,'http://127.0.0.1:65010/authorize_c
 
 class Bot():
 
-    def auth(self):
-        #r.refresh_access_information(os.environ.get(refresh_token))
-        r.login('captainmeta4',input('password: '))
+    def auth(self, keyname):
+        r.refresh_access_information(os.environ.get(keyname))
+        #r.login('captainmeta4',input('password: '))
 
     def text_to_triples(self, text):
         #generates triples given text
@@ -139,44 +144,49 @@ class Bot():
         else:
             return random.choice(self.starters)
         
-    def generate_text(self, text=""):
-        length = random.choice(self.lengths)
+    def get_random_comment(self, x):
+        #returns a random comment within the newest X
 
-        output = self.generate_sentence(text)
+        #reset x to random
+        x=random.randint(1,x)
 
-        while len(output.split())<length:
-            output += " " + self.generate_sentence(text)
-
-        return output
+        #get the x'th post and return it
+        for comment in subreddit.get_comments(limit=x):
+            post = comment
+            
+        return post
 
     def run_cycle(self):
         
-        user2=""
-
-        while True:
-
-            username = input('user: ')
+        #pick a random admin
+        username = random.choice(userlist)
+        
+        user=r.get_redditor(username)
+        self.generate_corpus(user)
+        
+        try:
+            text = self.generate_text
+            print(comment)
+        except:
+            return
             
-            if username != user2:
-                user=r.get_redditor(username)
-                self.generate_corpus(user)
-                user2=username
-            try:
-                comment = ("/u/"+str(user)+
-                           "\n\n* "+self.generate_text()+
-                           "\n\n* "+self.generate_text()+
-                           "\n\n* "+self.generate_text()
-                           )
-                print(comment)
-            except:
-                pass
+        #x% chance of making this as a new post
+        #y% chance of making a top-level comment on existing post
+        #z% chance of making a child comment
+        i = random.randint(1,100)
+        
+        if i<=100:
+            #title is first sentence
+            title = re.split("(?<=[.?!]) ",text,maxsplit=1)[0]
+            r.submit(subreddit,title,text=text)
+            
         
         
     def run(self):
         
-        #self.auth()
-        
-        self.run_cycle()
+        While True:
+            self.run_cycle()
+            time.sleep(60*10)
 
             
 
