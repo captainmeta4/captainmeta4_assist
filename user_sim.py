@@ -11,6 +11,7 @@ r=praw.Reddit("Markov user simulator bot by /u/captainmeta4")
 #userlist
 mappings = {
     'chooter':'chooter_sim',
+    'cupcake1713':'cupcake1713_sim',
     'Deimorz':'Deimorz_sim',
     'Drunken_Economist':'Drunken_Econ_Sim',
     'ekjp':'ekjp_sim',
