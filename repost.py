@@ -55,6 +55,10 @@ class bot():
             #ignore certain subreddits
             if submission.subreddit.display_name in ignore_subreddits:
                 continue
+            
+            #ignore posts that have been mod-approved
+            if submission.approved_by is not None:
+                continue
 
             #break down url
             ParsedURL = urlparse.urlparse(submission.url)
