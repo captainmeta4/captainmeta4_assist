@@ -232,7 +232,19 @@ class Bot():
             comment = self.get_random_comment(100)
             comment.reply(text)
         
-        
+        #check inbox and respond to summons
+        summon = "/u/"+mappings[username]
+        for message in r.get_unread():
+            message.mark_as_read()
+            if summon not in message.body:
+                continue
+            
+            #Enclosed in try to protect against any subreddit ban
+            try:
+                message.reply(self.generate_text())
+            except:
+                pass
+            
     def run(self):
         
         while True:
