@@ -165,24 +165,33 @@ class Bot():
     def get_random_comment(self, x):
         #returns a random comment within the newest X
 
-        #reset x to random
-        x=random.randint(1,x)
+        #set i to random
+        i=random.randint(1,x)
 
-        #get the x'th post and return it
-        for comment in subreddit.get_comments(limit=x):
+        #get the i'th comment and return it
+        for comment in subreddit.get_comments(limit=i):
             post = comment
             
+        #make sure it's not a Human post; if so try again
+        if r.get_info(post.link_id).link_flair_css_class == "human":
+            post = self.get_random_new(x)
+        
+        
         return post
     
     def get_random_new(self, x):
         #returns a random submission within the top X of /new
 
-        #reset x to random
-        x=random.randint(1,x)
+        #set i to random
+        i=random.randint(1,x)
 
-        #get the x'th post and return it
-        for submission in subreddit.get_new(limit=x):
+        #get the i'th post and return it
+        for submission in subreddit.get_new(limit=i):
             post = submission
+
+        #make sure it's not a Human post; if so try again
+        if post.link_flair_css_class == "human":
+            post = self.get_random_new(x)
 
         return post
 
