@@ -173,7 +173,7 @@ class Bot():
             post = comment
             
         #make sure it's not a Human post; if so try again
-        if r.get_info(thing_id='t3_'+post.link_id).link_flair_css_class == "human":
+        if r.get_info(thing_id=post.link_id).link_flair_css_class == "human":
             post = self.get_random_new(x)
         
         
