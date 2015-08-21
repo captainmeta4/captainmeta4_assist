@@ -36,7 +36,7 @@ class Bot():
 
     def auth(self, username):
         #r.refresh_access_information(os.environ.get(username))
-        r.login(mappings[username],os.environ.get('password'))
+        r.login(mappings[username],os.environ.get('password'), disable_warning=True)
 
     def text_to_triples(self, text):
         #generates triples given text
