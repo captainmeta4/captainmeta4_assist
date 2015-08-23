@@ -16,6 +16,7 @@ requires_params=[
     'defense.gov',
     'governmentisgood.com',
     'house.gov',
+    'liveleak.com',
     'news-republic.com',
     'senate.gov',
     'quinnipiac.edu',
