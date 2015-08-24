@@ -122,9 +122,15 @@ class Bot():
                 if submission.selftext == archive_text:
                     print('all done for now. %(i)s threads archived or updated' % {"i":str(i)})
                     return
-
-                submission.edit(archive_text)
-                print('submission edited')
+                
+                #try to edit; otherwise remove and resubmit
+                try:
+                    submission.edit(archive_text)
+                    print('submission edited')
+                except:
+                    submission.remove()
+                    r.submit(archive_subreddit, modmail.subject, text=archive_text).approve()
+                
                 break
             
             else:
