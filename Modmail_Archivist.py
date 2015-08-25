@@ -107,7 +107,7 @@ class Bot():
                 
 
             #Check and see if there's a submission for this thread already
-            query = "author:"+username+" self:yes selftext:"+modmail.id
+            query = " self:yes selftext:"+modmail.id
             permalink = "http://www.reddit.com/message/messages/"+modmail.id
 
             for submission in r.search(query, subreddit=archive_subreddit,sort='new'):
