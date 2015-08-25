@@ -107,8 +107,8 @@ class Bot():
                 
 
             #Check and see if there's a submission for this thread already
-            query = " self:yes selftext:"+modmail.id
             permalink = "http://www.reddit.com/message/messages/"+modmail.id
+            query = "self:yes selftext:"+permalink
 
             for submission in r.search(query, subreddit=archive_subreddit,sort='new'):
                 
@@ -146,5 +146,5 @@ if __name__=='__main__':
         print('running cycle')
         modbot.oauth_login()
         modbot.archive_modmail()
-        print('sleeping for 5 min')
-        time.sleep(300)
+        print('sleeping for 10 min')
+        time.sleep(600)
