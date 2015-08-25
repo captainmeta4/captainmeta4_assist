@@ -14,6 +14,7 @@ requires_params=[
     'hosted.ap.org',
     'c-span.org',
     'defense.gov',
+    'fec.gov',
     'governmentisgood.com',
     'house.gov',
     'liveleak.com',
