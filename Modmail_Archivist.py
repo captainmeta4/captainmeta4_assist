@@ -130,6 +130,7 @@ class Bot():
                 except:
                     submission.remove()
                     r.submit(archive_subreddit, modmail.subject, text=archive_text).approve()
+                    print('removed and recreated submission')
                 
                 break
             
