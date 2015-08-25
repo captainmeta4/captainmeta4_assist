@@ -21,6 +21,7 @@ requires_params=[
     'news-republic.com',
     'senate.gov',
     'quinnipiac.edu',
+    'unionleader.com',
     'youtu.be',
     'youtube.com'
     ]
