@@ -26,10 +26,6 @@ requires_params=[
     'youtube.com'
     ]
 
-ignore_subreddits=[
-    'xkcd'
-    ]
-
 #Feature not yet deployed
 #zero_false_positive=[
 #    'bostonglobe.com',
