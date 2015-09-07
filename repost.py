@@ -20,6 +20,7 @@ requires_params=[
     'liveleak.com',
     'news-republic.com',
     'senate.gov',
+    'surveyusa.com',
     'quinnipiac.edu',
     'unionleader.com',
     'youtu.be',
