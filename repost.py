@@ -89,6 +89,9 @@ class bot():
             
             #create search string
             search = "url:"+url
+            
+            #count prior duplicates
+            dupe_list = []
 
             #Search subreddit for other posts that match            
             for searchresult in r.search(search,subreddit=submission.subreddit, sort='New'):
@@ -105,20 +108,74 @@ class bot():
                 if url not in searchresult.url:
                     continue
 
-                #Flag as possible repost and break out of search results
-                print('repost detected')
-                submission.remove()
-                submission.add_comment(
-                    "Hi `%(author)s`. Thank you for participating in /r/Politics. However, your submission has been removed for the following reason:"
-                    "\n\n"
-                    "* Already Submitted: This article has already been submitted to /r/politics: http://redd.it/%(id)s"
-                    "\n\n"
-                    "I'm a bot and sometimes I make mistakes. If you have any questions about this removal, please feel free to [message the moderators.](https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/%(author)s&message=I have a question regarding the removal of this [submission.](%(url)s\))"
-                    % {"author":str(submission.author), "id":searchresult.id, "url":submission.permalink}
-                    ).distinguish()
-                submission.set_flair(flair_text="Already Submitted")
-                break
+                #At this point we know it's a repost (odd url constructions notwithstanding)
+                #Now we have to see if it complies with repost policy
+                
+                #count the duplicate
+                dupe_list.append(searchresult.id)
+                
+                #check original post age and remove if needed
+                age = submission.created_utc - searchresult.created_utc
+                if age < (60 * 60 * 24 * 3):  #3 days, in seconds
+                    self.3days_remove(submission, searchresult.id)
+                    break
+                
+                #check original post score and remove if needed
+                if searchresult.score >=20:
+                    self.score_remove(submission, searchresult.id)
+                    break
+                
+                #check repost count and remove if needed
+                if len(dupe_list) > 3:
+                    self.3posts_remove(submission, dupe_list)
+                    break
+    
+    def 3days_remove(self, submission, id):
+        submission.remove()
+        submission.set_flair(flair_text="Already Submitted")
+        msg = ("Hi `%(author)s`. Thank you for participating in /r/Politics. However, your submission has been removed for the following reason:"
+                "\n\n"
+                "* Already Submitted: This article has been submitted to /r/politics within the last three days:"
+                "\n\n http://redd.it/%(id)s"
+                "\n\n"
+                "I'm a bot and sometimes I make mistakes. If you have any questions about this removal, please feel free to [message the moderators.]"
+                "(https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/%(author)s&message=I have a question regarding the removal of this [submission.](%(url)s\))"
+                )
+        submission.add_comment(msg % {"author":str(submission.author), "id":id, "url":submission.permalink}).distinguish()
+        
+    def score_remove(self, submission, id):
+        submission.remove()
+        submission.set_flair(flair_text="Already Submitted")
+        msg = ("Hi `%(author)s`. Thank you for participating in /r/Politics. However, your submission has been removed for the following reason:"
+                "\n\n"
+                "* Already Submitted: An earlier duplicate of this post received some upvotes:"
+                "\n\n http://redd.it/%(id)s"
+                "\n\n"
+                "I'm a bot and sometimes I make mistakes. If you have any questions about this removal, please feel free to [message the moderators.]"
+                "(https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/%(author)s&message=I have a question regarding the removal of this [submission.](%(url)s\))"
+                )
+        submission.add_comment(msg % {"author":str(submission.author), "id":id, "url":submission.permalink}).distinguish()
+    
+    def 3post_remove(self, submission, dupe_list):
+        submission.remove()
+        submission.set_flair(flair_text="Already Submitted")
+        msg = ("Hi `%(author)s`. Thank you for participating in /r/Politics. However, your submission has been removed for the following reason:"
+                "\n\n"
+                "* Already Submitted: This article has already been submitted to /r/politics three times:"
+                "\n\n http://redd.it/%(id1)s"
+                "\n\n http://redd.it/%(id2)s"
+                "\n\n http://redd.it/%(id3)s"
+                "\n\n"
+                "I'm a bot and sometimes I make mistakes. If you have any questions about this removal, please feel free to [message the moderators.]"
+                "(https://www.reddit.com/message/compose?to=/r/politics&subject=Question regarding the removal of this submission by /u/%(author)s&message=I have a question regarding the removal of this [submission.](%(url)s\))"
+                )
+        params = {"author":str(submission.author), "url":submission.permalink}
+        params['id1']=dupe_list[0]
+        params['id2']=dupe_list[1]
+        params['id3']=dupe_list[2]
+        submission.add_comment(msg % params).distinguish()
 
+        
     def run(self):
         self.login()
         self.process_submissions()
