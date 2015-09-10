@@ -117,7 +117,7 @@ class bot():
                 #check original post age and remove if needed
                 age = submission.created_utc - searchresult.created_utc
                 if age < (60 * 60 * 24 * 3):  #3 days, in seconds
-                    self.3days_remove(submission, searchresult.id)
+                    self.three_days_remove(submission, searchresult.id)
                     break
                 
                 #check original post score and remove if needed
@@ -127,10 +127,10 @@ class bot():
                 
                 #check repost count and remove if needed
                 if len(dupe_list) > 3:
-                    self.3posts_remove(submission, dupe_list)
+                    self.three_posts_remove(submission, dupe_list)
                     break
     
-    def 3days_remove(self, submission, id):
+    def three_days_remove(self, submission, id):
         submission.remove()
         submission.set_flair(flair_text="Already Submitted")
         msg = ("Hi `%(author)s`. Thank you for participating in /r/Politics. However, your submission has been removed for the following reason:"
@@ -156,7 +156,7 @@ class bot():
                 )
         submission.add_comment(msg % {"author":str(submission.author), "id":id, "url":submission.permalink}).distinguish()
     
-    def 3post_remove(self, submission, dupe_list):
+    def three_posts_remove(self, submission, dupe_list):
         submission.remove()
         submission.set_flair(flair_text="Already Submitted")
         msg = ("Hi `%(author)s`. Thank you for participating in /r/Politics. However, your submission has been removed for the following reason:"
