@@ -18,6 +18,7 @@ requires_params=[
     'governmentisgood.com',
     'house.gov',
     'liveleak.com',
+    'nationalpost.com',
     'news-republic.com',
     'senate.gov',
     'surveyusa.com',
