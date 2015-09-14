@@ -1,3 +1,3 @@
 # Captainmeta4 Assist
 
-This is a personal use bot to help me out on reddit. It runs under my personal reddit account, /u/captainmeta4.
+These are some miscellaneous scripts/bots that help me out with stuff.
