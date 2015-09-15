@@ -15,6 +15,7 @@ requires_params=[
     'c-span.org',
     'defense.gov',
     'fec.gov',
+    'abcnews.go.com',
     'governmentisgood.com',
     'house.gov',
     'liveleak.com',
