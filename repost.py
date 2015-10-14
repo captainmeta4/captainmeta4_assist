@@ -21,6 +21,7 @@ requires_params=[
     'liveleak.com',
     'nationalpost.com',
     'news-republic.com',
+    'opensecrets.org',
     'senate.gov',
     'surveyusa.com',
     'quinnipiac.edu',
