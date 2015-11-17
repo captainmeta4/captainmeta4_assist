@@ -32,9 +32,11 @@ class Bot():
     def new_log_entry(self, fullname):
 
         submission = r.get_info(thing_id=fullname)
+        
+        url = "http://np.reddit.com/r/"+source+"/comments/"+submission.id+"/-/"
 
         #make the new submission
-        new = r.submit(mirror_sub, submission.title, url = submission.permalink)
+        new = r.submit(mirror_sub, submission.title, url = url)
 
         #add submission ids to mapping
         self.mapping[submission.fullname] = new.fullname
