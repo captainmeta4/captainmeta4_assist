@@ -72,6 +72,11 @@ class Bot():
 
 
     def unending_mod_log(self):
+        
+        #avoid duplicate processing on recent entries when bot is restarted
+        for action in source_sub.get_mod_log(limit=100):
+            self.already_done.append(action.id)
+        
         while True:
             actions = []
             for action in source_sub.get_mod_log(limit=100):
