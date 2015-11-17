@@ -26,8 +26,10 @@ class Bot():
         self.login()
 
     def login(self):
-
+        
+        print('logging in...')
         r.login(username,os.environ.get('password'), disable_warning=True)
+        print('...done')
 
     def new_log_entry(self, fullname):
 
@@ -37,6 +39,7 @@ class Bot():
 
         #make the new submission
         new = r.submit(mirror_sub, submission.title, url = url)
+        print('new log entry created for submission '+submission.title)
 
         #add submission ids to mapping
         self.mapping[submission.fullname] = new.fullname
