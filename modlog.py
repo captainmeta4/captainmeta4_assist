@@ -104,6 +104,8 @@ class Bot():
             #ignore automod
             if action.mod =="AutoModerator":
                 continue
+            
+            
 
             #for approvals/removals, get log entry.
             #for distinguishes, make sure it's a top level comment; otherwise skip
@@ -133,7 +135,7 @@ class Bot():
 
 
             #flair log entries
-            if (action.action =="removed"
+            if (action.action =="removelink"
                 or (action.action == "editflair" and (target.banned_by is not None))):
 
                 #see what the linkflair should be on removed posts
