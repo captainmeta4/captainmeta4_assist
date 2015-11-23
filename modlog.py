@@ -150,9 +150,10 @@ class Bot():
                 css_class = "removed red"
 
                 #check for spammed
-                if action.details == "removed spam":
-                    text = "Spam"
-                    css_class = "removed pink"
+                if action.details is not None:
+                    if "spam" in action.details:
+                        text = "Spam"
+                        css_class = "removed pink"
 
                 #check for no text
                 elif (target.link_flair_text is not None
