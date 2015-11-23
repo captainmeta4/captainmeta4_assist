@@ -155,10 +155,10 @@ class Bot():
                         text = "Spam"
                         css_class = "removed pink"
 
-                #check for no text
-                elif (target.link_flair_text is not None
-                    and target.link_flair_text != ""):
-                    text = target.link_flair_text
+                    #check for no text
+                    elif (target.link_flair_text is not None
+                        and target.link_flair_text != ""):
+                        text = target.link_flair_text
                 
                 log_entry.set_flair(flair_text = text, flair_css_class=css_class)
 
