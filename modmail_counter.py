@@ -6,8 +6,8 @@ import time
 username = 'captainmeta4'
 subreddit = 'gadgets'
 
-begin_time = "01 Oct 2015 00:00:00"
-end_time = "31 Oct 2015 23:59:59"
+begin_time = "01 Apr 2016 00:00:00"
+end_time = "30 Apr 2016 23:59:59"
 
 ##END CONFIGS
 

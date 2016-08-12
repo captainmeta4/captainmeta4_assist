@@ -1,3 +1,2 @@
-repost: python repost.py
-modlog: python modlog.py
+cyborg: python cyborg.py
 
