@@ -6,8 +6,14 @@ import time
 username = 'captainmeta4'
 subreddit = 'gadgets'
 
-begin_time = "01 Apr 2016 00:00:00"
-end_time = "30 Apr 2016 23:59:59"
+print('Input dates in format 01 Jan 2016')
+begin_day = input('Begin Day: ')
+end_day = input('End Day: ')
+
+
+
+begin_time = begin_day+" 00:00:00"
+end_time = end_day+" 23:59:59"
 
 ##END CONFIGS
 
