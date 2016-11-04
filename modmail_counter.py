@@ -4,7 +4,7 @@ import time
 ##CONFIGS
 
 username = 'captainmeta4'
-subreddit = 'gadgets'
+subreddit = input('subreddit: /r/')
 
 print('Input dates in format 01 Jan 2016')
 begin_day = input('Begin Day: ')
